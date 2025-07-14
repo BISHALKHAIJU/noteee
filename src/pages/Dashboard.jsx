@@ -10,121 +10,117 @@ const Dashboard = () => {
   const { getUserNotes, getPublicNotes } = useNotes();
 
   const userNotes = getUserNotes(user?.id || '');
-  const publicNotes = getPublicNotes().slice(0, 4); // Show only first 4 public notes
+  const publicNotes = getPublicNotes().slice(0, 4);
 
   return (
-    <div className="min-h-screen py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Welcome Section */}
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-8 mb-8 text-white">
-          <h1 className="text-3xl font-bold mb-2">Welcome back, {user?.name}!</h1>
-          <p className="text-blue-100 mb-4">
-            Ready to share your knowledge or discover new notes from your peers?
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-100 to-pink-200 py-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+
+        
+        <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-8 sm:p-10 mb-10 text-white shadow-xl">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-2">
+            Welcome back, {user?.name} 👋
+          </h1>
+          <p className="text-pink-100 text-sm sm:text-base mb-5">
+            Ready to share your knowledge or explore fresh notes?
           </p>
           <Link
             to="/upload"
-            className="inline-flex items-center space-x-2 bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200"
+            className="inline-flex items-center gap-2 bg-white text-purple-600 px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl font-semibold hover:bg-purple-50 hover:text-purple-700 transition-all shadow-md"
           >
             <Plus className="h-5 w-5" />
             <span>Share New Notes</span>
           </Link>
         </div>
 
-        {/* Stats Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="flex items-center">
-              <div className="p-3 bg-blue-100 rounded-lg">
-                <FileText className="h-6 w-6 text-blue-600" />
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mb-12">
+          {[
+            {
+              title: 'Your Notes',
+              count: userNotes.length,
+              icon: <FileText className="h-6 w-6 text-purple-600" />,
+              bg: 'bg-purple-100',
+            },
+            {
+              title: 'Public Notes',
+              count: publicNotes.length,
+              icon: <BookOpen className="h-6 w-6 text-pink-600" />,
+              bg: 'bg-pink-100',
+            },
+            {
+              title: 'Shared Notes',
+              count: userNotes.filter(note => note.isPublic).length,
+              icon: <Users className="h-6 w-6 text-fuchsia-600" />,
+              bg: 'bg-fuchsia-100',
+            },
+          ].map((stat, i) => (
+            <div
+              key={i}
+              className="bg-white/30 backdrop-blur-md border border-white/20 rounded-2xl shadow-md hover:shadow-xl transition p-5 flex items-center"
+            >
+              <div className={`${stat.bg} p-3 rounded-xl shadow-inner`}>
+                {stat.icon}
               </div>
               <div className="ml-4">
-                <p className="text-sm text-gray-600">Your Notes</p>
-                <p className="text-2xl font-bold text-gray-900">{userNotes.length}</p>
+                <p className="text-sm text-gray-600">{stat.title}</p>
+                <p className="text-xl font-bold text-gray-900">{stat.count}</p>
               </div>
             </div>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="flex items-center">
-              <div className="p-3 bg-green-100 rounded-lg">
-                <BookOpen className="h-6 w-6 text-green-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm text-gray-600">Public Notes</p>
-                <p className="text-2xl font-bold text-gray-900">{publicNotes.length}</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="flex items-center">
-              <div className="p-3 bg-purple-100 rounded-lg">
-                <Users className="h-6 w-6 text-purple-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm text-gray-600">Shared Notes</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {userNotes.filter(note => note.isPublic).length}
-                </p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
-        {/* Your Notes Section */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Your Notes</h2>
+        
+        <section className="mb-12">
+          <div className="flex items-center justify-between flex-wrap gap-2 mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Your Notes</h2>
             <Link
               to="/upload"
-              className="text-blue-600 hover:text-blue-800 font-medium"
+              className="text-purple-600 hover:text-purple-800 font-medium text-sm sm:text-base transition"
             >
-              Add New Note
+              + Add New Note
             </Link>
           </div>
-          
+
           {userNotes.length === 0 ? (
-            <div className="bg-white rounded-lg shadow-md p-12 text-center">
+            <div className="bg-white/30 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-8 text-center">
               <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No notes yet</h3>
-              <p className="text-gray-600 mb-4">
-                Share your first note with the community and start building your collection.
-              </p>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">No notes yet</h3>
+              <p className="text-gray-600 mb-6">Start your journey by uploading your first note.</p>
               <Link
                 to="/upload"
-                className="inline-flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
+                className="inline-flex items-center gap-2 bg-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-purple-700 transition shadow-md"
               >
                 <Plus className="h-5 w-5" />
-                <span>Upload Your First Note</span>
+                Upload Note
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {userNotes.map((note) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {userNotes.map(note => (
                 <NoteCard key={note.id} note={note} showUploader={false} />
               ))}
             </div>
           )}
-        </div>
+        </section>
 
-        {/* Recent Public Notes Section */}
-        <div>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Recent Public Notes</h2>
+        <section>
+          <div className="flex items-center justify-between flex-wrap gap-2 mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Recent Public Notes</h2>
             <Link
               to="/all-notes"
-              className="text-blue-600 hover:text-blue-800 font-medium"
+              className="text-purple-600 hover:text-purple-800 font-medium text-sm sm:text-base transition"
             >
-              View All Notes
+              View All Notes →
             </Link>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {publicNotes.map((note) => (
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {publicNotes.map(note => (
               <NoteCard key={note.id} note={note} />
             ))}
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );

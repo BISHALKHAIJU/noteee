@@ -17,18 +17,7 @@ const UploadPage = () => {
   const { addNote } = useNotes();
   const navigate = useNavigate();
 
-  const subjects = [
-    'Computer Science',
-    'Mathematics',
-    'Physics',
-    'Chemistry',
-    'Biology',
-    'English',
-    'History',
-    'Economics',
-    'Psychology',
-    'Other'
-  ];
+ 
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files?.[0];
@@ -126,19 +115,14 @@ const UploadPage = () => {
               <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
                 Subject *
               </label>
-              <select
+              <input
+                type="text"
                 id="subject"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="">Select a subject</option>
-                {subjects.map((subj) => (
-                  <option key={subj} value={subj}>
-                    {subj}
-                  </option>
-                ))}
-              </select>
+                placeholder="Enter a descriptive subject for your notes"
+              />
             </div>
 
             <div>

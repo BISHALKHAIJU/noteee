@@ -23,8 +23,6 @@ const Navbar = () => {
             <BookOpen className="h-8 w-8 text-blue-600" />
             <span className="text-xl font-bold text-gray-800">NoteNest</span>
           </Link>
-
-          {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
             <Link
               to="/all-notes"
@@ -82,8 +80,6 @@ const Navbar = () => {
               </div>
             )}
           </div>
-
-          {/* Mobile Menu Button */}
           <button
             className="md:hidden p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -91,8 +87,6 @@ const Navbar = () => {
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
-
-        {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t">
             <div className="flex flex-col space-y-4">

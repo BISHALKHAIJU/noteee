@@ -9,36 +9,6 @@ export const NotesProvider = ({ children }) => {
     const savedNotes = localStorage.getItem('noteNestNotes');
     if (savedNotes) {
       setNotes(JSON.parse(savedNotes));
-    } else {
-      // Initialize with some sample notes
-      const sampleNotes = [
-        {
-          id: '1',
-          title: 'Introduction to React',
-          description: 'Complete guide to React fundamentals and hooks',
-          subject: 'Computer Science',
-          fileName: 'react-intro.pdf',
-          fileUrl: '#',
-          isPublic: true,
-          uploadedBy: 'sample-user',
-          uploaderName: 'John Doe',
-          uploadDate: '2024-01-15'
-        },
-        {
-          id: '2',
-          title: 'Calculus I - Derivatives',
-          description: 'Comprehensive notes on derivatives and their applications',
-          subject: 'Mathematics',
-          fileName: 'calculus-derivatives.pdf',
-          fileUrl: '#',
-          isPublic: true,
-          uploadedBy: 'sample-user-2',
-          uploaderName: 'Jane Smith',
-          uploadDate: '2024-01-14'
-        }
-      ];
-      setNotes(sampleNotes);
-      localStorage.setItem('noteNestNotes', JSON.stringify(sampleNotes));
     }
   }, []);
 
